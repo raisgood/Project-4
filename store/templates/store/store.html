@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-  <nav>
-  <a href="{% url 'index' %}">Home</a> |
-  <a href="{% url 'store' %}">Store</a>
-  </nav>
+{% extends "base.html" %}
+
+{% block content %}
     <h1>
       Store
     </h1>
-  </body>
-</html>
+    <p>There are {{count}} book types(s) in stock.</p>
+    <ul>
+<section class="books-container">
+    {% for book in books %}
+    <div>
+      {{book.title}} ({{book.author}}) - Stock: {{book.stock}}  
+      <form action="{% url 'store' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{book.id}}" />
+        <button class="btn btn-info" type="submit">Buy</button>
+    </form>
+    </div>
+    {% endfor %}
+    </ul>
+{% endblock %}
+</section>
+ 
